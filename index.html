@@ -96,6 +96,18 @@
             background: #fafafa;
         }
 
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+
         footer {
             font-size: 0.9rem;
             color: #666;
@@ -114,49 +126,81 @@
         <h2>项目 Projects</h2>
         <ul>
             <li>
-                <span class="item-title"><a href="https://github.com/{{ page.github_username }}/SimpleFocus" target="_blank">SimpleFocus</a></span>
+                <span class="item-title"><a href="https://github.com/yuhe6021/SimpleFocus" target="_blank">SimpleFocus</a></span>
                 <span class="item-desc">A SimpleFocus App for iOS，Swift 开发，专注于简洁界面的番茄工作法。</span>
             </li>
             <li>
-                <span class="item-title"><a href="https://github.com/{{ page.github_username }}/spacecraft-manager" target="_blank">spacecraft-manager</a></span>
+                <span class="item-title"><a href="https://github.com/yuhe6021/spacecraft-manager" target="_blank">spacecraft-manager</a></span>
                 <span class="item-desc">A simple spacecraft manager system，包含基本航天器管理与状态监控逻辑。</span>
             </li>           
         </ul>
     </section>
 
     <section>
-        <h2>常用开发工具</h2>
-        <div class="grid grid-2">
-            <div class="badge"><a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a></div>
-            <div class="badge"><a href="https://git-scm.com/" target="_blank">Git</a></div>
-            <div class="badge"><a href="https://nodejs.org/" target="_blank">Node.js</a></div>
-            <div class="badge"><a href="https://www.docker.com/" target="_blank">Docker</a></div>
-            <div class="badge"><a href="https://www.jetbrains.com/idea/" target="_blank">IntelliJ IDEA</a></div>
-            <div class="badge"><a href="https://www.postman.com/" target="_blank">Postman</a></div>
-        </div>
-    </section>
-
-    <section>
-        <h2>桌面应用下载</h2>
-        <ul>
-            <li><span class="item-title"><a href="https://code.visualstudio.com/" target="_blank">VS Code 桌面版</a></span><span class="item-desc">轻量、扩展丰富的编辑器。</span></li>
-            <li><span class="item-title"><a href="https://www.jetbrains.com/idea/download/" target="_blank">IntelliJ IDEA</a></span><span class="item-desc">Java / 全栈开发首选 IDE。</span></li>
-            <li><span class="item-title"><a href="https://www.docker.com/get-started" target="_blank">Docker Desktop</a></span><span class="item-desc">本地容器开发与调试。</span></li>
-            <li><span class="item-title"><a href="https://www.notion.so/desktop" target="_blank">Notion</a></span><span class="item-desc">笔记与知识管理。</span></li>
-            <li><span class="item-title"><a href="https://slack.com/downloads/windows" target="_blank">Slack</a></span><span class="item-desc">团队协作与消息。</span></li>
-            <li><span class="item-title"><a href="https://www.microsoft.com/zh-cn/microsoft-teams/download-app" target="_blank">Microsoft Teams</a></span><span class="item-desc">远程会议与工作协调。</span></li>
-        </ul>
+        <h2>常用工具和应用下载</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>工具名称</th>
+                    <th>下载链接</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Visual Studio Code</td>
+                    <td><a href="https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user" target="_blank">https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user</a></td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td><a href="https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.1/Git-2.42.0-64-bit.exe" target="_blank">https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.1/Git-2.42.0-64-bit.exe</a></td>
+                </tr>
+                <tr>
+                    <td>Node.js</td>
+                    <td><a href="https://nodejs.org/dist/v20.10.0/node-v20.10.0-x64.msi" target="_blank">https://nodejs.org/dist/v20.10.0/node-v20.10.0-x64.msi</a></td>
+                </tr>
+                <tr>
+                    <td>Python 3.12.10</td>
+                    <td><a href="https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe" target="_blank">https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe</a></td>
+                </tr>
+                <tr>
+                    <td>QQ</td>
+                    <td><a href="https://dldir1v6.qq.com/qqfile/qq/QQNT/Windows/QQ_9.9.29_260401_x64_01.exe" target="_blank">https://dldir1.qq.com/qqfile/qq/PCQQ9.7.19/QQ9.7.19.29302.exe</a></td>
+                </tr>
+                <tr>
+                    <td>Steam</td>
+                    <td><a href="https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe" target="_blank">https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe</a></td>
+                </tr>
+                <tr>
+                    <td>VMware 17</td>
+                    <td><a href="https://www.vmware.com/go/getworkstation-win" target="_blank">https://www.vmware.com/go/getworkstation-win</a></td>
+                </tr>
+                <tr>
+                    <td>Win11 原版镜像</td>
+                    <td><a href="https://www.microsoft.com/en-us/software-download/windows11" target="_blank">https://www.microsoft.com/en-us/software-download/windows11</a></td>
+                </tr>
+                <tr>
+                    <td>wePE 镜像</td>
+                    <td><a href="https://mirrors.sdu.edu.cn/wepe/WePE_64_V2.3.exe" target="_blank">https://mirrors.sdu.edu.cn/wepe/WePE_64_V2.3.exe</a></td>
+                </tr>
+                <tr>
+                    <td>图吧工具箱</td>
+                    <td><a href="https://www.tbtool.cn/download/" target="_blank">https://www.tbtool.cn/download/</a></td>
+                </tr>
+            </tbody>
     </section>
 
     <section>
         <h2>联系 Links</h2>
         <ul>
-            <li><a href="https://github.com/{{ page.github_username }}" target="_blank">GitHub</a></li>
+            <li><a href="https://github.com/yuhe6021" target="_blank">GitHub</a></li>
         </ul>
     </section>
 
     <footer>
-        <p>© {{ 'now' | date: '%Y' }} Yuhe</p>
+        <p>© <span id="current-year"></span> Yuhe</p>
     </footer>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
