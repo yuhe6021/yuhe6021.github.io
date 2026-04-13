@@ -1,12 +1,14 @@
 ---
 layout: none
+name: 你的名字
+github_username: 你的用户名
 ---
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site.github.owner_name }} | 个人主页</title>
+    <title>{{ page.name }} | 个人主页</title>
     <style>
         * {
             margin: 0;
@@ -109,19 +111,19 @@ layout: none
 </head>
 <body>
     <header>
-        <h1>{{ site.github.owner_name }}</h1>
-        <p>极简开发者，专注于高效工具链、可维护代码与清晰交付。这里是 {{ site.github.owner_name }} 的项目、常用工具与桌面应用收藏。</p>
+        <h1>{{ page.name }}</h1>
+        <p>极简开发者，专注于高效工具链、可维护代码与清晰交付。这里是 {{ page.name }} 的项目、常用工具与桌面应用收藏。</p>
     </header>
 
     <section>
         <h2>项目 Projects</h2>
         <ul>
             <li>
-                <span class="item-title"><a href="https://github.com/{{ site.github.owner_name }}/SimpleFocus" target="_blank">SimpleFocus</a></span>
+                <span class="item-title"><a href="https://github.com/{{ page.github_username }}/SimpleFocus" target="_blank">SimpleFocus</a></span>
                 <span class="item-desc">A SimpleFocus App for iOS，Swift 开发，专注于简洁界面的番茄工作法。</span>
             </li>
             <li>
-                <span class="item-title"><a href="https://github.com/{{ site.github.owner_name }}/spacecraft-manager" target="_blank">spacecraft-manager</a></span>
+                <span class="item-title"><a href="https://github.com/{{ page.github_username }}/spacecraft-manager" target="_blank">spacecraft-manager</a></span>
                 <span class="item-desc">A simple spacecraft manager system，包含基本航天器管理与状态监控逻辑。</span>
             </li>           
         </ul>
@@ -154,12 +156,12 @@ layout: none
     <section>
         <h2>联系 Links</h2>
         <ul>
-            <li><a href="https://github.com/{{ site.github.owner_name }}" target="_blank">GitHub</a></li>
+            <li><a href="https://github.com/{{ page.github_username }}" target="_blank">GitHub</a></li>
         </ul>
     </section>
 
     <footer>
-        <p>© 2026 {{ site.github.owner_name }} · 简约、实用、专注效率</p>
+        <p>© 2026 {{ page.name }} · 简约、实用、专注效率</p>
     </footer>
 </body>
 </html>
