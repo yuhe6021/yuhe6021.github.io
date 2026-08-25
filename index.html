@@ -3,205 +3,498 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuhe | 个人主页</title>
+    <title>全球市场交易状态面板</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #fff;
-            color: #111;
-            line-height: 1.6;
-            max-width: 780px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: #0f141c;
+            color: #e6edf3;
+            min-height: 100vh;
+            padding: 40px 60px;
+        }
+        .container {
+            max-width: 1700px;
             margin: 0 auto;
-            padding: 56px 20px;
         }
-
-        a {
-            color: #111;
-            text-decoration: none;
-        }
-
-        a:hover {
-            opacity: 0.7;
-        }
-
-        header,
-        section,
-        footer {
-            margin-bottom: 40px;
-        }
-
-        header h1 {
-            font-size: 2.4rem;
-            letter-spacing: -0.04em;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 1rem;
-            color: #444;
-            max-width: 620px;
-        }
-
-        h2 {
-            font-size: 1.1rem;
-            letter-spacing: 0.04em;
-            margin-bottom: 18px;
-            color: #222;
-            border-top: 1px solid #ddd;
-            padding-top: 22px;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        li {
-            margin-bottom: 10px;
+        .header-bar {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .item-title {
-            font-weight: 600;
-        }
-
-        .item-desc {
-            color: #555;
-        }
-
-        .grid {
-            display: grid;
-            gap: 12px;
-        }
-
-        .grid-2 {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .badge {
-            display: inline-flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 999px;
-            font-size: 0.95rem;
-            background: #fafafa;
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .btn-group button {
+            padding: 10px 18px;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-left:8px;
+        }
+        #refreshBtn {
+            background-color: #2383e2;
+            color: #fff;
+        }
+        #refreshBtn:hover { background-color: #1a6fc2; }
+        #editBtn {
+            background-color:#38a169;
+            color:#fff;
+        }
+        #editBtn:hover { background-color:#2f855a; }
+
+        .time-bar {
+            font-family: "Consolas", monospace;
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #94a3b8;
+        }
+        .today-info {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-size: 17px;
+        }
+        .holiday {
+            background-color: #472b18;
+            color: #ffbc70;
+        }
+        .workday {
+            background-color: #162b48;
+            color: #88c8ff;
+        }
+        .error-box{
+            background:#442226;
+            color:#ff9b9b;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 20px;
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
         }
-
-        th, td {
-            border: 1px solid #000;
-            padding: 8px;
-            text-align: center;
+        .market-card {
+            background-color: #1a202c;
+            border-radius: 12px;
+            padding: 22px;
+            border: 1px solid #2d3748;
+            cursor: grab;
+            transition: transform 0.15s, box-shadow 0.15s;
         }
-
-        footer {
-            font-size: 0.9rem;
-            color: #666;
-            border-top: 1px solid #eee;
-            padding-top: 24px;
+        .market-card:active{
+            cursor:grabbing;
         }
+        .market-card.dragging{
+            opacity:0.4;
+            box-shadow:0 0 20px #0070ff80;
+        }
+        .market-name-wrap{
+            display:flex;
+            gap:8px;
+            align-items:center;
+            margin-bottom:8px;
+        }
+        .market-name {
+            font-size: 19px;
+            font-weight: 600;
+            flex:1;
+        }
+        .market-name-input{
+            width:100%;
+            background:#272e3b;
+            border:1px solid #4a5568;
+            color:#fff;
+            font-size:19px;
+            font-weight:600;
+            padding:4px 6px;
+            border-radius:4px;
+        }
+        .time-range {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-bottom:8px;
+        }
+        .index-wrap{
+            font-family:Consolas,monospace;
+            font-size:16px;
+            margin:6px 0;
+        }
+        .countdown-wrap{
+            font-family:Consolas,monospace;
+            font-size:15px;
+            margin:8px 0 12px;
+            color:#69db7c;
+        }
+        .status-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size:15px;
+            font-weight:500;
+        }
+        .status-open {
+            background-color: #16422c;
+            color: #69db7c;
+        }
+        .status-close {
+            background-color: #272e3b;
+            color: #94a3b8;
+        }
+        .status-holiday {
+            background-color: #442226;
+            color: #ff8787;
+        }
+        .edit-hint{
+            color:#888;
+            font-size:13px;
+            margin-bottom:12px;
+        }
+        .red{color:#ff7878;}
+        .green{color:#73e699;}
     </style>
 </head>
 <body>
-    <header>
-        <h1>Yuhe</h1>
-        <p>A man who wants to do something. 💪</p>
-    </header>
+<div class="container">
+    <div class="header-bar">
+        <h1>全球主要市场 · 交易状态面板</h1>
+        <div class="btn-group">
+            <button id="editBtn">✏️编辑模式</button>
+            <button id="refreshBtn">🔄手动刷新</button>
+        </div>
+    </div>
+    <div class="edit-hint" id="editHint" style="display:none;">编辑模式：修改市场名称，拖拽卡片调整顺序；退出自动保存配置</div>
 
-    <section>
-        <h2>项目 Projects</h2>
-        <ul>
-            <li>
-                <span class="item-title"><a href="https://github.com/yuhe6021/SimpleFocus" target="_blank">SimpleFocus</a></span>
-                <span class="item-desc">A SimpleFocus App for iOS，Swift 开发，专注于简洁界面的番茄工作法。</span>
-            </li>
-            <li>
-                <span class="item-title"><a href="https://github.com/yuhe6021/spacecraft-manager" target="_blank">spacecraft-manager</a></span>
-                <span class="item-desc">A simple spacecraft manager system，包含基本航天器管理与状态监控逻辑。</span>
-            </li>           
-        </ul>
-    </section>
+    <div class="time-bar" id="nowTime">--</div>
+    <div id="todayBox" class="today-info">查询中…</div>
 
-    <section>
-        <h2>常用工具和应用下载</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>工具名称</th>
-                    <th>下载链接</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Visual Studio Code</td>
-                    <td><a href="https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user" target="_blank">https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user</a></td>
-                </tr>
-                <tr>
-                    <td>Git</td>
-                    <td><a href="https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.1/Git-2.42.0-64-bit.exe" target="_blank">https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.1/Git-2.42.0-64-bit.exe</a></td>
-                </tr>
-                <tr>
-                    <td>Node.js</td>
-                    <td><a href="https://nodejs.org/dist/v20.10.0/node-v20.10.0-x64.msi" target="_blank">https://nodejs.org/dist/v20.10.0/node-v20.10.0-x64.msi</a></td>
-                </tr>
-                <tr>
-                    <td>Python 3.12.10</td>
-                    <td><a href="https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe" target="_blank">https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe</a></td>
-                </tr>
-                <tr>
-                    <td>QQ</td>
-                    <td><a href="https://dldir1v6.qq.com/qqfile/qq/QQNT/Windows/QQ_9.9.29_260401_x64_01.exe" target="_blank">https://dldir1.qq.com/qqfile/qq/PCQQ9.7.19/QQ9.7.19.29302.exe</a></td>
-                </tr>
-                <tr>
-                    <td>Steam</td>
-                    <td><a href="https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe" target="_blank">https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe</a></td>
-                </tr>
-                <tr>
-                    <td>VMware 17</td>
-                    <td><a href="https://www.vmware.com/go/getworkstation-win" target="_blank">https://www.vmware.com/go/getworkstation-win</a></td>
-                </tr>
-                <tr>
-                    <td>Win11 原版镜像</td>
-                    <td><a href="https://www.microsoft.com/en-us/software-download/windows11" target="_blank">https://www.microsoft.com/en-us/software-download/windows11</a></td>
-                </tr>
-                <tr>
-                    <td>wePE 镜像</td>
-                    <td><a href="https://mirrors.sdu.edu.cn/wepe/WePE_64_V2.3.exe" target="_blank">https://mirrors.sdu.edu.cn/wepe/WePE_64_V2.3.exe</a></td>
-                </tr>
-                <tr>
-                    <td>图吧工具箱</td>
-                    <td><a href="https://www.tbtool.cn/download/" target="_blank">https://www.tbtool.cn/download/</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    <div class="market-grid" id="marketList"></div>
+</div>
 
-    <section>
-        <h2>联系 Links</h2>
-        <ul>
-            <li><a href="https://github.com/yuhe6021" target="_blank">GitHub</a></li>
-        </ul>
-    </section>
+<script>
+const baseUrl = "https://api.apisbo.com/holidays";
+let editMode = false;
+// 预留指数行情数据容器，后续对接行情API把数据填这里
+let marketIndexData = {};
 
-    <footer>
-        <p>© <span id="current-year"></span> Yuhe</p>
-    </footer>
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+// 市场配置：新增日经、澳股、伦敦富时；closeHM用于收盘倒计时
+let marketListConfig = [
+    {
+        id:"a",
+        name:"A股（沪深）",
+        times:"09:30‑11:30 / 13:00‑15:00",
+        closeHM:"15:00",
+        indexCode:"000001.SH",
+        openCheck:(isHoliday, wDay)=>{
+            if(isHoliday || wDay===0 || wDay===6) return "holiday";
+            return isNowInRange("09:30","11:30") || isNowInRange("13:00","15:00") ? "open":"close";
+        }
+    },
+    {
+        id:"b",
+        name:"港股 恒生",
+        times:"09:30‑12:00 / 13:00‑16:00",
+        closeHM:"16:00",
+        indexCode:"HSI",
+        openCheck:(isHoliday, wDay)=>{
+            if(isHoliday || wDay===0 || wDay===6) return "holiday";
+            return isNowInRange("09:30","12:00") || isNowInRange("13:00","16:00") ? "open":"close";
+        }
+    },
+    {
+        id:"c",
+        name:"日经225（东京）",
+        times:"08:00‑10:30 /11:30‑14:30(北京时间)",
+        closeHM:"14:30",
+        indexCode:"N225",
+        openCheck:(isHoliday, wDay)=>{
+            if(wDay===0 || wDay===6) return "holiday";
+            return isNowInRange("08:00","10:30") || isNowInRange("11:30","14:30") ? "open":"close";
+        }
+    },
+    {
+        id:"d",
+        name:"澳股 ASX200",
+        times:"07:00‑13:00(北京时间，无夏令)",
+        closeHM:"13:00",
+        indexCode:"AXJO",
+        openCheck:(isHoliday, wDay)=>{
+            if(wDay===0 || wDay===6) return "holiday";
+            return isNowInRange("07:00","13:00") ? "open":"close";
+        }
+    },
+    {
+        id:"e",
+        name:"伦敦富时100",
+        times:"夏令15:00‑23:30｜冬令16:00‑00:30",
+        closeHM:"23:30",
+        indexCode:"FTSE",
+        openCheck:(isHoliday, wDay)=>{
+            if(wDay===0 || wDay===6) return "holiday";
+            return isNowInRange("15:00","23:30") ? "open":"close";
+        }
+    },
+    {
+        id:"f",
+        name:"国内商品期货（日盘）",
+        times:"09:00‑10:15,10:30‑11:30 /13:30‑15:00",
+        closeHM:"15:00",
+        indexCode:"",
+        openCheck:(isHoliday, wDay)=>{
+            if(isHoliday || wDay===0 || wDay===6) return "holiday";
+            return isNowInRange("09:00","11:30") || isNowInRange("13:30","15:00") ? "open":"close";
+        }
+    },
+    {
+        id:"g",
+        name:"美股（夏令·北京时间）",
+        times:"21:30‑次日04:00",
+        closeHM:"04:00",
+        indexCode:"SPX",
+        openCheck:(isHoliday, wDay)=>{
+            if(wDay===0 || wDay===1) return "holiday";
+            return isNowInRange("21:30","23:59") || isNowInRange("00:00","04:00") ? "open":"close";
+        }
+    }
+];
+
+const STORAGE_KEY = "market_panel_config";
+
+function loadLocalConfig(){
+    const str = localStorage.getItem(STORAGE_KEY);
+    if(!str) return;
+    try{
+        const local = JSON.parse(str);
+        const newArr = [];
+        local.forEach(item=>{
+            const orig = marketListConfig.find(o=>o.id === item.id);
+            if(orig){
+                newArr.push({...orig, name:item.name});
+            }
+        });
+        if(newArr.length>0) marketListConfig = newArr;
+    }catch(e){console.log("本地配置读取失败");}
+}
+function saveLocalConfig(){
+    const saveData = marketListConfig.map(m=>({id:m.id,name:m.name}));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
+}
+
+function getTodayStr(){
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,'0');
+    const day = String(d.getDate()).padStart(2,'0');
+    return `${y}-${m}-${day}`;
+}
+
+function formatNowMs(){
+    const d = new Date();
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+    const ms = String(d.getMilliseconds()).padStart(3,'0');
+    return `本地北京时间：${hh}:${mm}:${ss}.${ms}`;
+}
+
+function parseHM(hmStr){
+    const [h,m] = hmStr.split(":").map(Number);
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m).getTime();
+}
+
+function isNowInRange(startHM, endHM){
+    const now = Date.now();
+    const s = parseHM(startHM);
+    const e = parseHM(endHM);
+    return now >= s && now <= e;
+}
+
+// 计算收盘倒计时，返回null代表已经收盘，不展示
+function getCountdownMs(closeHM){
+    const now = Date.now();
+    let closeTs = parseHM(closeHM);
+    if(closeTs < now) closeTs += 86400_000;
+    let diff = closeTs - now;
+    if(diff <= 0) return null;
+    const h = Math.floor(diff / 3600_000);
+    const rem = diff % 3600_000;
+    const min = Math.floor(rem /60_000);
+    const rem2 = rem %60_000;
+    const sec = Math.floor(rem2 /1000);
+    const ms = rem2 %1000;
+    return `${String(h).padStart(2,'0')}:${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}.${String(ms).padStart(3,'0')}`;
+}
+
+const timeEl = document.getElementById("nowTime");
+setInterval(()=>{
+    timeEl.innerText = formatNowMs();
+    document.querySelectorAll(".countdown-val").forEach(el=>{
+        const hm = el.dataset.closehm;
+        const cd = getCountdownMs(hm);
+        if(cd !== null){
+            el.innerText = "距离收盘："+cd;
+            el.style.display="block";
+        }else{
+            el.style.display="none";
+        }
+    })
+},10);
+
+let dragSrcEl = null;
+function handleDragStart(e){
+    dragSrcEl = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+}
+function handleDragEnd(){
+    this.classList.remove('dragging');
+    document.querySelectorAll(".market-card").forEach(c=>c.classList.remove('dragging'));
+}
+function handleDragOver(e){
+    if(e.preventDefault) e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    return false;
+}
+function handleDrop(e){
+    e.stopPropagation();
+    if(dragSrcEl !== this){
+        const parent = document.getElementById("marketList");
+        const allCards = Array.from(parent.querySelectorAll(".market-card"));
+        const fromIdx = allCards.indexOf(dragSrcEl);
+        const toIdx = allCards.indexOf(this);
+        if(fromIdx < toIdx){
+            this.parentNode.insertBefore(dragSrcEl, this.nextSibling);
+        }else{
+            this.parentNode.insertBefore(dragSrcEl, this);
+        }
+        const cards = Array.from(document.querySelectorAll(".market-card"));
+        const newOrder = [];
+        cards.forEach(cardDom=>{
+            const id = cardDom.dataset.id;
+            const obj = marketListConfig.find(x=>x.id === id);
+            if(obj) newOrder.push(obj);
+        });
+        marketListConfig = newOrder;
+        saveLocalConfig();
+    }
+}
+
+function bindDragEvents(){
+    document.querySelectorAll(".market-card").forEach(card=>{
+        card.removeEventListener('dragstart',handleDragStart);
+        card.removeEventListener('dragend',handleDragEnd);
+        card.removeEventListener('dragover',handleDragOver);
+        card.removeEventListener('drop',handleDrop);
+        card.addEventListener('dragstart',handleDragStart);
+        card.addEventListener('dragend',handleDragEnd);
+        card.addEventListener('dragover',handleDragOver);
+        card.addEventListener('drop',handleDrop);
+    })
+}
+
+async function fetchRender(){
+    const today = getTodayStr();
+    const todayBox = document.getElementById("todayBox");
+    const marketList = document.getElementById("marketList");
+
+    todayBox.innerText = "正在查询节假日接口……";
+    marketList.innerHTML = "";
+
+    try{
+        const resp = await fetch(`${baseUrl}/date/${today}`);
+        const data = await resp.json();
+        const isHoliday = data.is_holiday;
+        const holidayName = data.name || "";
+        const weekDay = new Date().getDay();
+
+        if(isHoliday){
+            todayBox.className = "today-info holiday";
+            todayBox.innerText = `📅 ${today}｜今日：节假日 ${holidayName}`;
+        }else{
+            todayBox.className = "today-info workday";
+            todayBox.innerText = `📅 ${today}｜今日：普通工作日/周末`;
+        }
+
+        marketListConfig.forEach(mk=>{
+            const statusCode = mk.openCheck(isHoliday, weekDay);
+            let statusText, statusClass;
+            if(statusCode === "open"){
+                statusText = "🟢 交易中";
+                statusClass = "status-open";
+            }else if(statusCode === "holiday"){
+                statusText = "🔴 休市";
+                statusClass = "status-holiday";
+            }else{
+                statusText = "⚪ 非交易时段";
+                statusClass = "status-close";
+            }
+
+            // 只有交易中才输出倒计时字符串
+            const cdText = statusCode === "open" ? getCountdownMs(mk.closeHM) : null;
+            const indexInfo = marketIndexData[mk.indexCode] || {point:"--",change:"--",pct:"--"};
+
+            const card = document.createElement("div");
+            card.className = "market-card";
+            card.draggable = editMode;
+            card.dataset.id = mk.id;
+
+            card.innerHTML = `
+                <div class="market-name-wrap">
+                    <div class="market-name">${mk.name}</div>
+                    <input class="market-name-input" value="${mk.name}" data-id="${mk.id}" style="${editMode?'':'display:none'}">
+                </div>
+                <div class="time-range">${mk.times}</div>
+                <div class="index-wrap">
+                    指数：<span>${indexInfo.point}</span>
+                    <span class="${Number(indexInfo.pct)>=0?'green':'red'}">${indexInfo.change} ${indexInfo.pct}%</span>
+                </div>
+                <div class="countdown-wrap" style="${cdText===null?'display:none':''}">
+                    <span class="countdown-val" data-closehm="${mk.closeHM}">距离收盘：${cdText}</span>
+                </div>
+                <span class="status-tag ${statusClass}">${statusText}</span>
+            `;
+            marketList.appendChild(card);
+        });
+
+        bindDragEvents();
+
+        document.querySelectorAll(".market-name-input").forEach(input=>{
+            input.onchange = function(){
+                const id = this.dataset.id;
+                const target = marketListConfig.find(m=>m.id === id);
+                if(target){
+                    target.name = this.value.trim();
+                    saveLocalConfig();
+                    const card = this.closest(".market-card");
+                    card.querySelector(".market-name").innerText = target.name;
+                }
+            }
+        })
+
+    }catch(err){
+        todayBox.className = "today-info error-box";
+        todayBox.innerText = "接口请求失败（CORS跨域，部署需要后端代理）：" + err.message;
+    }
+}
+
+document.getElementById("editBtn").addEventListener("click",()=>{
+    editMode = !editMode;
+    document.getElementById("editHint").style.display = editMode ? "block":"none";
+    fetchRender();
+})
+document.getElementById("refreshBtn").addEventListener("click", fetchRender);
+
+loadLocalConfig();
+fetchRender();
+</script>
 </body>
 </html>
